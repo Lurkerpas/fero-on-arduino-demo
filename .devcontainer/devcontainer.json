@@ -12,13 +12,9 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": [
-		"sudo apt-get update",
-		" && sudo apt-get install -y curl qemu-system-misc ca-certificates make xz-utils",
-		" && curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | ARDUINO_CLI_VERSION=1.2.2 BINDIR=/usr/local/bin sh",
-		" && mkdir .arduino15",
-		" && arduino-cli config init && arduino-cli core update-index && arduino-cli core install arduino:avr"
-	]
+	"postCreateCommand": 
+		"sudo apt-get update && sudo apt-get install -y curl qemu-system-misc ca-certificates make xz-utils && curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/usr/local/bin sh && mkdir .arduino15 && arduino-cli config init && arduino-cli core update-index && arduino-cli core install arduino:avr"
+	
 
 	// Configure tool-specific properties.
 	// "customizations": {},
