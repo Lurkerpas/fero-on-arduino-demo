@@ -1,0 +1,3 @@
+[submodule "fero"]
+	path = fero
+	url = git@github.com:Lurkerpas/fero.git
