@@ -55,4 +55,5 @@ dkms.conf
 *.dwo
 
 # Project build dirs
-basic/binaries/*
+basic/work/binaries/*
+basic/work/sketch/*

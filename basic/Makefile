@@ -1,32 +1,38 @@
 .PHONY=all clean qemu
 
-all: work\build\node_1\partition_1
+PARTITION_NAME=partition_1
+SKETCH_DIR=work/sketch/partition_1
+BINARIES_DIR=work/binaries
+BINARY=${BINARIES_DIR}/partition_1.ino.with_bootloader.bin
+
+all: ${BINARY}
 
 clean:
-	rm -r -f binaries
+	rm -r -f ${BINARIES_DIR}
+	rm -r -f ${SKETCH_DIR}
 
-work\build\node_1\partition_1:
+${SKETCH_DIR}:
+	mkdir -p ${SKETCH_DIR}
+	cp ../fero/src/*.* ${SKETCH_DIR}
+	cp work/dataview/C/*.* ${SKETCH_DIR}
+	cp work/function1/implem/default/C/src/*.* ${SKETCH_DIR}
+	cp work/function1/implem/default/C/wrappers/*.* ${SKETCH_DIR}
+	cp work/build/node_1/partition_1/*.* ${SKETCH_DIR}
+	cp work/build/system_spec/*.* ${SKETCH_DIR}
+	cp work/build/*.* ${SKETCH_DIR}
+	sed -i 's|../../||g' ${SKETCH_DIR}/*.h
+
+${BINARIES_DIR}:
+	mkdir -p ${BINARIES_DIR}
+
+${BINARY}: ${SKETCH_DIR} ${BINARIES_DIR}
 	arduino-cli compile --fqbn arduino:avr:uno \
-	--output-dir binaries \
-	--build-property "compiler.c.extra_flags= \
-	-I../fero/src \
-	-Iwork/dataview/C \
-	-Iwork/build \
-	-Iwork/build/system_spec \
-	-Iwork/build/node_1/partition_1 \
-	-Iwork/function1/implem/default/C/src \
-	-Iwork/function1/implem/default/C/wrappers \
-	" \
+	--output-dir ${BINARIES_DIR} \
 	--build-property "build.extra_flags= \
-	-I../fero/src \
-	-Iwork/dataview/C \
-	-Iwork/build \
-	-Iwork/build/system_spec \
-	-Iwork/build/node_1/partition_1 \
-	-Iwork/function1/implem/default/C/src \
-	-Iwork/function1/implem/default/C/wrappers \
+	-I${SKETCH_DIR} \
 	" \
-	work/build/node_1/partition_1
+	${SKETCH_DIR}
+	
 
-qemu: work\build\node_1\partition_1
-	qemu-system-avr -machine uno -nographic -bios binaries/partition_1.ino.with_bootloader.bin
+qemu: ${BINARY}
+	qemu-system-avr -machine uno -nographic -bios ${BINARY}
