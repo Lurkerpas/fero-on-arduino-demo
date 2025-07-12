@@ -1,6 +1,5 @@
 #include "transport.h"
 
-#include <rtems.h>
 
 // Sporadic required
 

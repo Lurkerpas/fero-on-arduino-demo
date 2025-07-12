@@ -3,14 +3,12 @@
 #include "dataview-uniq.h"
 #include "system_spec.h"
 
-#define USE_THREAD_LOCAL_STRORAGE
-#include <threads.h>
-#define PID_STORAGE_CLASS __thread
-
 #define PARTITION_NAME PARTITION_1
 
 extern enum RemoteInterface bus_to_unique_port_map[];
 extern int bus_has_any_destination_port[];
+
+#define PID_STORAGE_CLASS
 
 // Enable all routes
 void initialize_routing(void);

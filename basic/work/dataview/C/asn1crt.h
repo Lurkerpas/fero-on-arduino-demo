@@ -6,8 +6,7 @@
 
 #ifdef  __cplusplus
 extern "C" {
-#  include <cstdint>
-#  include <cinttypes>
+#  include <stdint.h>
 	/* C99 check */
 #elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) || _MSC_VER >= 1900
 #  include <stdbool.h>

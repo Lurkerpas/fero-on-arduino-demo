@@ -5,9 +5,10 @@
 
 #include <system_spec.h>
 
-#include <Broker.h>
 #include <request_size.h>
 #include <dataview-uniq.h>
+
+typedef void (*deliver_function)(const uint8_t* const data, const size_t length);
 
 void initialize_transport();
 

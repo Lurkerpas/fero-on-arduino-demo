@@ -8,20 +8,17 @@
     !! file. The up-to-date signatures can be found in the header file. !!
 */
 #include "function1.h"
-#ifdef unix
-#include <stdio.h>
-#endif
 
 void function1_startup(void)
 {
 
 }
 
+void ardu_print(char* data);
+
 void function1_PI_trigger(void)
 {
-#ifdef unix
-    printf("Tick");
-#endif
+    ardu_print("Tick\n");
 }
 
 

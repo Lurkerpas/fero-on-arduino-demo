@@ -2,8 +2,6 @@
 
 #include "routing.h"
 
-#include <RoutingHelper.h>
-
 void initialize_routing() {
     
     
