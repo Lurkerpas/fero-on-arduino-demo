@@ -8,14 +8,11 @@
     !! file. The up-to-date signatures can be found in the header file. !!
 */
 #include "utilitycomponent.h"
-//#include <stdio.h>
 
 
 void utilitycomponent_startup(void)
 {
-   // Write your initialisation code
-   // You may call sporadic required interfaces and start timers
-   // puts ("[utilitycomponent] Startup");
+
 }
 
 void utilitycomponent_PI_computep
@@ -24,7 +21,7 @@ void utilitycomponent_PI_computep
        asn1SccTestInteger *OUT_c)
 
 {
-   // Write your code here
+   *OUT_c = *IN_a * *IN_b;
 }
 
 
@@ -34,7 +31,7 @@ void utilitycomponent_PI_computeup
        asn1SccTestInteger *OUT_c)
 
 {
-   // Write your code here
+   *OUT_c = *IN_a + *IN_b;
 }
 
 

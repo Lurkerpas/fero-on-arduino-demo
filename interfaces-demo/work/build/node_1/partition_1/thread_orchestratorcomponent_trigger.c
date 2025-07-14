@@ -1,5 +1,6 @@
 #include "thread_orchestratorcomponent_trigger.h"
 
+#include <fero.h>
 #include <assert.h>
 #include "interfaces_info.h"
 

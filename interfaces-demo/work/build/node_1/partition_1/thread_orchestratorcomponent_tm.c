@@ -1,5 +1,6 @@
 #include "thread_orchestratorcomponent_tm.h"
 
+#include <fero.h>
 #include <assert.h>
 #include "interfaces_info.h"
 
@@ -9,7 +10,7 @@ extern Fero_Queue orchestratorcomponent_tm_queue;
 
 bool orchestratorcomponent_tm_job(void* unused)
 {
-    ThreadOrchestratorcomponent_TmRequest request;
+    struct ThreadOrchestratorcomponent_TmRequest request;
     uint32_t size;
 
     if (Fero_Queue_get(&orchestratorcomponent_tm_queue, &request, &size))

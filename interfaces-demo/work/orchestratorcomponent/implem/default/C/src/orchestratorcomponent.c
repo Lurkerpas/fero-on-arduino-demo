@@ -8,27 +8,44 @@
     !! file. The up-to-date signatures can be found in the header file. !!
 */
 #include "orchestratorcomponent.h"
-//#include <stdio.h>
 
+extern void ardu_print(char* data);
+extern void int_to_string(asn1SccTestInteger value, char* buffer);
 
 void orchestratorcomponent_startup(void)
 {
-   // Write your initialisation code
-   // You may call sporadic required interfaces and start timers
-   // puts ("[orchestratorcomponent] Startup");
+
 }
 
 void orchestratorcomponent_PI_tm
       (const asn1SccTestStruct *IN_response)
 
 {
-   // Write your code here
+   char buffer[16];
+   ardu_print("TM received ");
+   int_to_string(IN_response->id, buffer);
+   ardu_print(buffer);
+   ardu_print("\n");
+   for (int i = 0; i < IN_response->payload.nCount; i++)
+   {
+      int_to_string(IN_response->payload.arr[i], buffer);
+      ardu_print(buffer);
+      ardu_print("\n");
+   }
 }
 
 
 void orchestratorcomponent_PI_trigger(void)
 {
-   // Write your code here
+   static asn1SccTestInteger i = 0;
+   char buffer[16];
+   i++; 
+   ardu_print("Trigger ");
+   int_to_string(i, buffer);
+   ardu_print(buffer);
+   ardu_print("\n");
+   
+   orchestratorcomponent_RI_tc(&i);
 }
 
 

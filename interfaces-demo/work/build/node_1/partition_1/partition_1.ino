@@ -25,6 +25,7 @@ extern void init_corecomponent(void);
 extern void init_utilitycomponent(void);
 
 void ardu_print(char* data);
+void int_to_string(asn1SccTestInteger value, char* buffer);
 }
 
 FERO_SCHEDULER_BUFFER(scheduler_buffer, RUNTIME_TASK_COUNT);
@@ -61,7 +62,7 @@ static void create_tasklet_corecomponent_tc(void)
     Fero_Tasklet_init(
         &corecomponent_tc_tasklet,
         "corecomponent_tc_tasklet",
-        corecomponent_tc_tasklet_job,
+        corecomponent_tc_job,
         NULL
     );
 
@@ -146,10 +147,44 @@ static void create_tasklet_orchestratorcomponent_trigger(void)
     );
 }
 
-
+// Hacks for writing to console from functions;
+// Ugly, but this is just demo code
 void ardu_print(char* data)
 {
+    const size_t len = strlen(data);
+    while (Serial.availableForWrite() < len )
+    {
+        // NOP
+        // Serial.flush(); does not seem to work on qemu
+    }
     Serial.print(data);
+}
+
+void int_to_string(asn1SccTestInteger value, char* buffer) {
+   if (value == 0) {
+      buffer[0] = '0';
+      buffer[1] = '\0';
+      return;
+   }
+   
+   int index = 0;
+   
+   while (value > 0) {
+      buffer[index++] = '0' + (value % 10);
+      value /= 10;
+   }
+   
+   int start = 0;
+   int end = index - 1;
+   while (start < end) {
+      char temp = buffer[start];
+      buffer[start] = buffer[end];
+      buffer[end] = temp;
+      start++;
+      end--;
+   }
+   
+   buffer[index] = '\0';
 }
 
 void setup()

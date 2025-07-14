@@ -8,21 +8,42 @@
     !! file. The up-to-date signatures can be found in the header file. !!
 */
 #include "corecomponent.h"
-//#include <stdio.h>
 
+extern void ardu_print(char* data);
+extern void int_to_string(asn1SccTestInteger value, char* buffer);
 
 void corecomponent_startup(void)
 {
-   // Write your initialisation code
-   // You may call sporadic required interfaces and start timers
-   // puts ("[corecomponent] Startup");
+
 }
 
 void corecomponent_PI_tc
       (const asn1SccTestInteger *IN_request)
 
 {
-   // Write your code here
+   static int x = 0;
+   x++;
+   asn1SccTestStruct response;
+   int count = *IN_request % 5;
+   response.id = *IN_request;
+   response.payload.nCount = count;
+   for (int i = 0; i < count; i++)
+   {
+      asn1SccTestInteger y = i;
+      asn1SccTestInteger z;
+      if (i % 2 == 0)
+      {
+         // Native, so does not check bounds
+         corecomponent_RI_computep(&x, &y, &z);
+      }
+      else
+      {
+         // Native, so does not check bounds
+         corecomponent_RI_computeup(&x, &y, &z);
+      }
+      response.payload.arr[i] = z % 10000; // To avoid overflowing asn1SccTestInteger
+   }
+   corecomponent_RI_tm(&response);
 }
 
 

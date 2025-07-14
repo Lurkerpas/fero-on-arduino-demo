@@ -4,6 +4,7 @@
 
 // Sporadic provided
 
+#include <fero.h>
 #include "thread_corecomponent_tc.h"
 
 #include <string.h>
