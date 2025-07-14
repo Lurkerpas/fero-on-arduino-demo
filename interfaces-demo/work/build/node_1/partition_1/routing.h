@@ -4,8 +4,7 @@
 #include "system_spec.h"
 
 #define USE_THREAD_LOCAL_STRORAGE
-#include <threads.h>
-#define PID_STORAGE_CLASS __thread
+#define PID_STORAGE_CLASS 
 
 #define PARTITION_NAME PARTITION_1
 

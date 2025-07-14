@@ -1,7 +1,5 @@
 #include "transport.h"
 
-#include <rtems.h>
-
 // Sporadic required
 
 // Sporadic provided
@@ -12,19 +10,13 @@
 
 void deliver_to_corecomponent_tc(const asn1SccPID sender_pid, const uint8_t* const data, const size_t length)
 {
-    extern rtems_id corecomponent_tc_Global_Queue;
+    extern Fero_Queue corecomponent_tc_queue;
 
-    struct ThreadCorecomponent_TcRequest request = {0};
-    if(length > 0)
-    {
-        memcpy(request.m_data, data, length);
-    }
-    request.m_length = length;
-    request.m_sender_pid = (uint32_t)sender_pid;
-
-    rtems_message_queue_send(corecomponent_tc_Global_Queue,
-                             &request,
-                             sizeof(struct ThreadCorecomponent_TcRequest ));
+    Fero_Queue_put(
+        &corecomponent_tc_queue,
+        data,
+        length
+    );
 }
 
 
@@ -34,19 +26,13 @@ void deliver_to_corecomponent_tc(const asn1SccPID sender_pid, const uint8_t* con
 
 void deliver_to_orchestratorcomponent_tm(const asn1SccPID sender_pid, const uint8_t* const data, const size_t length)
 {
-    extern rtems_id orchestratorcomponent_tm_Global_Queue;
+    extern Fero_Queue orchestratorcomponent_tm_queue;
 
-    struct ThreadOrchestratorcomponent_TmRequest request = {0};
-    if(length > 0)
-    {
-        memcpy(request.m_data, data, length);
-    }
-    request.m_length = length;
-    request.m_sender_pid = (uint32_t)sender_pid;
-
-    rtems_message_queue_send(orchestratorcomponent_tm_Global_Queue,
-                             &request,
-                             sizeof(struct ThreadOrchestratorcomponent_TmRequest ));
+    Fero_Queue_put(
+        &orchestratorcomponent_tm_queue,
+        data,
+        length
+    );
 }
 
 

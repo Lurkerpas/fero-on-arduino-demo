@@ -29,6 +29,8 @@ ${SKETCH_DIR}:
 	cp work/build/system_spec/*.* ${SKETCH_DIR}
 	cp work/build/*.* ${SKETCH_DIR}
 	sed -i 's|../../||g' ${SKETCH_DIR}/*.h
+	sed -i '/<cstdint>/d' ${SKETCH_DIR}/asn1crt.h || true
+	sed -i '/<cinttypes>/d' ${SKETCH_DIR}/asn1crt.h || true
 
 ${BINARIES_DIR}:
 	mkdir -p ${BINARIES_DIR}
